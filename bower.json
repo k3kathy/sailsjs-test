@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "crafty": "~0.6.3"
+    "crafty": "~0.6.3",
+    "jquery": "~2.1.3"
   }
 }

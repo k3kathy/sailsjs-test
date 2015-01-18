@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 io.socket.on('connect', function() {
-
+  console.log("hi");
 });
 
 ServerAdapter = {

@@ -25,7 +25,12 @@ Game = {
         Crafty.e('Platform').at(0, this.map_grid.height - 1);
         Crafty.e('Edge').at(-1, 0);
         Crafty.e('Edge').at(this.map_grid.width + 1, 0);
-
-        Crafty.e('PlayerCharacter').at(5, 5);
     }
+}
+
+GameAdapter = {
+  addNewPlayer: function(loc, id) {
+    console.log('Adding player at: (' + loc.x + ', ' + loc.y + ')');
+    Crafty.e('PlayerCharacter').at(loc.x, loc.y);
+  }
 }

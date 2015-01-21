@@ -46,9 +46,41 @@ Crafty.c('Edge', {
 
 Crafty.c('PlayerCharacter', {
     init: function() {
-        this.requires('Actor, Fourway, Color, Gravity, Collision')
-            .fourway(4)
-            .color('blue')
+        this.requires('Actor, Gravity, Collision, spr_right')
             .gravity('Platform');
+    }
+});
+
+Crafty.c('MyPlayer', {
+    init: function() {
+        this.requires('PlayerCharacter, Twoway, SpriteAnimation')
+            .twoway(4,8)
+
+            // These next lines define our four animations
+      //  each call to .animate specifies:
+      //  - the name of the animation
+      //  - the x and y coordinates within the sprite
+      //     map at which the animation set begins
+      //  - the number of animation frames *in addition to* the first one
+      .reel('PlayerMovingUp', 600, 0, 0, 4)
+      .reel('PlayerMovingRight', 600, 0, 1, 4)
+      .reel('PlayerMovingDown', 600, 0, 2, 4)
+      .reel('PlayerMovingLeft', 600, 0, 3, 4);
+ 
+    // Watch for a change of direction and switch animations accordingly
+    var animation_speed = 4;
+    this.bind('NewDirection', function(data) {
+      if (data.x > 0) {
+        this.animate('PlayerMovingRight', animation_speed, -1);
+      } else if (data.x < 0) {
+        this.animate('PlayerMovingLeft', animation_speed, -1);
+      } else if (data.y > 0) {
+        this.animate('PlayerMovingDown', animation_speed, -1);
+      } else if (data.y < 0) {
+        this.animate('PlayerMovingUp', animation_speed, -1);
+      } else {
+        this.pauseAnimation();
+      }
+    });
     }
 });

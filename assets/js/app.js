@@ -7,7 +7,7 @@ io.socket.on('connect', function() {
   io.socket.get('/player', function(resData, jwres) {
     console.log(resData);
     $.each(resData, function(key, val) {
-      console.log(key + ', ' + val);
+      console.log('players : ' + key + ', ' + val);
       GameAdapter.addNewPlayer({'x': val.xLoc, 'y': val.yLoc}, val.id);
     });
   });
@@ -23,12 +23,13 @@ io.socket.on('player', function(event) {
   GameAdapter.addNewPlayer({'x': event.data.xLoc, 'y': event.data.yLoc}, event.data.id);
 });
 
+
 ServerAdapter = {
   addNewPlayer: function(loc) {
     io.socket.post('/player/create',
         {xLoc: loc.x, yLoc: loc.y},
         function(data, jwres) {
-          GameAdapter.addNewPlayer({'x': data.xLoc, 'y': data.yLoc}, data.id);
+          GameAdapter.addMyPlayer({'x': data.xLoc, 'y': data.yLoc}, data.id);
         });
   }
 }
